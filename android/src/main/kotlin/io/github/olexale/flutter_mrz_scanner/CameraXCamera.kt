@@ -6,7 +6,13 @@ import android.graphics.*
 import android.graphics.ImageFormat
 import android.graphics.YuvImage
 import android.util.Size
-import androidx.camera.core.*
+import androidx.camera.core.AspectRatio
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
@@ -18,9 +24,6 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 
 class CameraXCamera constructor(
     private val context: Context,
@@ -38,7 +41,7 @@ class CameraXCamera constructor(
     private var preview: Preview? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var imageCapture: ImageCapture? = null
-    private var camera: Camera? = null
+    private var camera: androidx.camera.core.Camera? = null
     private var isFlashOn = false
     private var lensFacing = CameraSelector.LENS_FACING_BACK
 

@@ -41,7 +41,7 @@ class CameraXCamera constructor(
     private var preview: Preview? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var imageCapture: ImageCapture? = null
-    private var camera: androidx.camera.core.Camera? = null
+    private var cameraInstance: androidx.camera.core.Camera? = null
     private var isFlashOn = false
     private var lensFacing = CameraSelector.LENS_FACING_BACK
 
@@ -76,12 +76,12 @@ class CameraXCamera constructor(
 
     fun flashlightOn() {
         isFlashOn = true
-        camera?.cameraControl?.enableTorch(true)
+        cameraInstance?.cameraControl?.enableTorch(true)
     }
 
     fun flashlightOff() {
         isFlashOn = false
-        camera?.cameraControl?.enableTorch(false)
+        cameraInstance?.cameraControl?.enableTorch(false)
     }
 
     fun takePhoto(result: MethodChannel.Result, crop: Boolean) {
@@ -150,7 +150,7 @@ class CameraXCamera constructor(
         try {
             cameraProvider.unbindAll()
 
-            camera = cameraProvider.bindToLifecycle(
+            cameraInstance = cameraProvider.bindToLifecycle(
                 lifecycleOwner,
                 cameraSelector,
                 preview,
@@ -160,7 +160,7 @@ class CameraXCamera constructor(
 
             // Apply flash state if needed
             if (isFlashOn) {
-                camera?.cameraControl?.enableTorch(true)
+                cameraInstance?.cameraControl?.enableTorch(true)
             }
 
         } catch (exc: Exception) {
